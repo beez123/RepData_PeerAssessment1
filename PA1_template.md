@@ -4,7 +4,8 @@ author: "Student 11025756"
 date: "Saturday, April 18, 2015"
 output: html_document
 ---
-```{r}
+
+```r
 ## Setting output format for numbers
 knit_hooks$set(inline = function(x) {
   prettyNum(round(x,2), big.mark=",")
@@ -18,7 +19,8 @@ This report summarizes the findings associated with the analysis of the personal
 # Preparing the data
 
 The file containing the data is read into a dataframe. All rows with missing data were moved.
-```{r}
+
+```r
 ## Read in the CSV file
 setwd("~/JHUDataScience/Reproducible Research")
 activity_raw <- read.csv("activity.csv")
@@ -30,7 +32,8 @@ activity <- activity_raw[complete.cases(activity_raw),]
 # Summarizing steps taken per day
 
 For each day in the data set, the sum for each day was calculated.
-```{r}
+
+```r
 ## Calculate the total number per day
 sum_day <- 0
 j <- 1
@@ -44,27 +47,30 @@ for (i in levels(activity$date)) {
 ```
 
 Using those daily sums, a histogram was prepared.  This histogram shows the frequency of the number of steps recorded per day.
-```{r}
+
+```r
 ## Create a histogram for the total number per day
 hist(sum_day, xlab = "Number of Steps", main = "Frequency of Steps Taken")
-
 ```
 
-```{r}
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
+
+
+```r
 ## Find the mean and median
 mean_noNA <- round(mean (sum_day), digits=0)
 median_noNA <- round(median (sum_day), digits=0)
-
 ```
 
 To better understand the data, the mean and median for the sums of each day were collected.
-Mean = `r mean_noNA` and Median = `r median_noNA`.
+Mean = 9,354 and Median = 10,395.
 
 # Average daily activity pattern
 
 A line graph was prepared to show the average number of steps taken across all days for each of the 5 minute intervals.  The following graph shows the average number of steps for each day over the course of the time intervals.
 
-```{r}
+
+```r
 ## Find the average per day for each time interval
 avg_interval <- 0
 intervals <- 0
@@ -81,14 +87,19 @@ for (i in levels(as.factor(activity$interval))) {
  
 ## Plot number of steps per time interval
 plot (intervals,avg_interval, type="l", xlab="5 Minutes Time Intervals", ylab="Average Number of Steps", main="Average Number of Steps per Time Interval")
+```
 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
+
+```r
 ## Time interval for average maximum
 max_steps <- as.integer(intervals[which.max(avg_interval)])
 ```
-The maximum number of steps occured at the interval `r max_steps`.
+The maximum number of steps occured at the interval 835.
 
 
-```{r}
+
+```r
 NA_avg_interval <- 0
 NA_activity <- data.frame()
 
@@ -138,17 +149,21 @@ median_diff <- median_NA - median_noNA
 
 # Replacements for missing data
 
-The original data set contained `r num_NAs` missing data points for steps.  Replacement of those NAs was performed.  The approach used was to find the average for the interval across all days, and use that average to replace the missing data points.  With those data points replaced, the sum of steps across all days was calculated and a historgram was prepared.
+The original data set contained 2,304 missing data points for steps.  Replacement of those NAs was performed.  The approach used was to find the average for the interval across all days, and use that average to replace the missing data points.  With those data points replaced, the sum of steps across all days was calculated and a historgram was prepared.
 
-```{r}
+
+```r
 ## Create a histogram for the total number per day
 hist(NA_sum_day, xlab = "Number of Steps", main = "Frequency of Steps Taken (NAs Replaced)")
 ```
 
-For comparison the mean and median of this replacement data set were also calculate.
-Mean with NAs replaced = `r mean_NA`, and median with NAs replaced = `r median_NA`.  For comparison the non-replaced Mean = `r mean_noNA` and Median = `r median_noNA`.  The replacement of NAs, using the described method, has created a appreciable difference between the means, where the mean with replacment is `r mean_diff` steps greater, and a modest difference in the medians (difference=`r median_diff` steps greater).  Additionally, the frequency of lower numbers has decreased in the replacement set (per comparison of the histograms), with an increase in the frequency of the midrange values.
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
 
-```{r}
+For comparison the mean and median of this replacement data set were also calculate.
+Mean with NAs replaced = 10,766, and median with NAs replaced = 10,766.  For comparison the non-replaced Mean = 9,354 and Median = 10,395.  The replacement of NAs, using the described method, has created a appreciable difference between the means, where the mean with replacment is 1,412 steps greater, and a modest difference in the medians (difference=371 steps greater).  Additionally, the frequency of lower numbers has decreased in the replacement set (per comparison of the histograms), with an increase in the frequency of the midrange values.
+
+
+```r
 ### Weekday and Weekend
 WK_activity <- NA_activity
 
@@ -194,12 +209,12 @@ for (i in levels(as.factor(weekend_activity$interval))) {
     we_intervals[b] <- i
     b<-b+1
 } 
-
 ```
 # Patterns in Weekend and Weekday Activity
 Additional analysis was performed to understand the differences between weekday and weekend activity.  The replacement data set was used for this analysis.  A histogram comparison was created to show the number of steps per time interval for the weekend and weekdays.
 
-```{r}
+
+```r
 ## record original plot settings
 opar <- par()
 
@@ -210,8 +225,35 @@ par (mfcol=c(2,1))
 plot (wd_intervals,wd_avg_interval, type="l", xlab="5 Minutes Time Intervals", ylab="Average Number of Steps", main="Weekday Average Number of Steps per Time Interval")
 
 plot (we_intervals,we_avg_interval, type="l", xlab="5 Minutes Time Intervals", ylab="Average Number of Steps", main="Weekend Average Number of Steps per Time Interval")
+```
 
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
+
+```r
 ## Reset plot options
 par(opar)
+```
 
+```
+## Warning in par(opar): graphical parameter "cin" cannot be set
+```
+
+```
+## Warning in par(opar): graphical parameter "cra" cannot be set
+```
+
+```
+## Warning in par(opar): graphical parameter "csi" cannot be set
+```
+
+```
+## Warning in par(opar): graphical parameter "cxy" cannot be set
+```
+
+```
+## Warning in par(opar): graphical parameter "din" cannot be set
+```
+
+```
+## Warning in par(opar): graphical parameter "page" cannot be set
 ```
