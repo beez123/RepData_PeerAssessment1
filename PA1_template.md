@@ -1,8 +1,8 @@
 ---
-title: "Reproducible Research Project 1"
-author: "Student 11025756"
-date: "Saturday, April 18, 2015"
-output: html_document
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
 ---
 
 ```r
@@ -12,11 +12,11 @@ knit_hooks$set(inline = function(x) {
 })
 ```
 
-# Introduction
+## Introduction
 
 This report summarizes the findings associated with the analysis of the personal activity tracker data collected over the course of two months.  For each day, the number of steps taken are recorded in 5 minute intervals.
 
-# Preparing the data
+## Loading and preprocessing the data
 
 The file containing the data is read into a dataframe. All rows with missing data were moved.
 
@@ -29,7 +29,7 @@ activity_raw <- read.csv("activity.csv")
 activity <- activity_raw[complete.cases(activity_raw),]
 ```
 
-# Summarizing steps taken per day
+## What is mean total number of steps taken per day?
 
 For each day in the data set, the sum for each day was calculated.
 
@@ -65,7 +65,7 @@ median_noNA <- round(median (sum_day), digits=0)
 To better understand the data, the mean and median for the sums of each day were collected.
 Mean = 9,354 and Median = 10,395.
 
-# Average daily activity pattern
+## What is the average daily activity pattern?
 
 A line graph was prepared to show the average number of steps taken across all days for each of the 5 minute intervals.  The following graph shows the average number of steps for each day over the course of the time intervals.
 
@@ -147,7 +147,7 @@ mean_diff <- mean_NA - mean_noNA
 median_diff <- median_NA - median_noNA
 ```
 
-# Replacements for missing data
+## Imputing missing values
 
 The original data set contained 2,304 missing data points for steps.  Replacement of those NAs was performed.  The approach used was to find the average for the interval across all days, and use that average to replace the missing data points.  With those data points replaced, the sum of steps across all days was calculated and a historgram was prepared.
 
@@ -210,7 +210,7 @@ for (i in levels(as.factor(weekend_activity$interval))) {
     b<-b+1
 } 
 ```
-# Patterns in Weekend and Weekday Activity
+## Are there differences in activity patterns between weekdays and weekends?
 Additional analysis was performed to understand the differences between weekday and weekend activity.  The replacement data set was used for this analysis.  A histogram comparison was created to show the number of steps per time interval for the weekend and weekdays.
 
 
